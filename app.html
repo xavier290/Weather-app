@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather app</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-wrap">
+        <header>
+            <input type="text" autocomplete="off" class="search-box" placeholder="Search for a city...">
+            <canvas class="icon" id="icon" width="128" height="128"></canvas>
+        </header>
+        <main>
+            <section class="location">
+                <div class="city"> Managua, Ni</div>
+            </section>
+            <div class="current">
+                <div class="temp">30</div>
+                <span>°C</span>
+            </div>
+            <div class="weather">Sunny</div>
+
+            <input type="button" value="more details" id="moreInfo">
+            <div class="infoContainer" id="toggleInfo">
+                <ul>
+                    <li class="feels">feels like</li>
+                    <li class="max">temp max</li>
+                    <li class="min">temp min</li>
+                    <li class="humidity">humidity</li>
+                    <li class="pressure">pressure</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+
+    <script src="skycons.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
