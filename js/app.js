@@ -38,14 +38,14 @@ async function geo_success(position) {
     try {
         let res = await fetch(`${api.base}find?lat=${lat}&lon=${lng}&units=${api.units.celcius}&appid=${api.key}`)
         let data =  await res.json()
-        console.log(data)
-        renderWeatherData(data)
+        renderMainWeatherData(data)
+        renderOtherWeatherData(data)
     } catch (error) {
         console.log(error)
     }
 }
 
-async function renderWeatherData(data) {
+function renderMainWeatherData(data) {
     theDate()
 
     const location = document.querySelector(".location")
@@ -59,31 +59,76 @@ async function renderWeatherData(data) {
     temp.innerHTML = `<p class="number">${data.list[0].main.temp}</p>
                       <div class="symbol">°C</div>`
 
-    const details = document.querySelector(".details")
+    const details = document.querySelector(".box")
     details.innerHTML = 
-        `<div class="box">
-            <div class="humidity">
-                <div>
-                    <p>${data.list[0].main.humidity}</P>
-                    <div class="symbol">%</div>
-                </div>
-                <h3 class="title">Humidity</h3>
+        `<div class="humidity">
+            <div>
+                <p>${data.list[0].main.humidity}</P>
+                <div class="symbol">%</div>
             </div>
-            <div class="wind">
-                <div>
-                    <p>${data.list[0].wind.speed}</p>
-                    <div class="symbol">mts</div>
-                </div>
-                <h3 class="title">Wind</h3>
+            <h3 class="title">Humidity</h3>
+        </div>
+        <div class="wind">
+            <div>
+                <p>${data.list[0].wind.speed}</p>
+                <div class="symbol">mts</div>
             </div>
-            <div class="pressure">
-                <div>
-                    <p>${data.list[0].main.pressure}</p>
-                    <div class="symbol">Pa</div>
-                </div>
-                <h3 class="title">Pressure</h3>
+            <h3 class="title">Wind</h3>
+        </div>
+        <div class="pressure">
+            <div>
+                <p>${data.list[0].main.pressure}</p>
+                <div class="symbol">Pa</div>
             </div>
+            <h3 class="title">Pressure</h3>
         </div>`
+}
+
+function renderOtherWeatherData(data) {
+  renderTitles(data)
+  renderOtherData(data)
+}
+
+function renderTitles(data) {
+    const more = document.querySelectorAll(".content .title")
+    let titles = []
+    //getting cities names from the json and placing it into an object to pass it into the html
+    for (i = 1; i < 5; i++) {
+        const name = `${data.list[i].name}`
+        titles.push(name)
+    }
+    for (i = 0; i < 4; i++) {
+        more[i].innerHTML = `<h2>${titles[i]}</h2>`
+    }
+}
+
+function renderOtherData(data) {
+    const more = document.querySelectorAll(".content .info")
+    let temp = []
+    let hum = []
+    let press = []
+    let wind = []
+
+    // getting temperature, pressure, wind and humitity and displaying them
+    for (i = 1; i < 5; i++) {
+        const Temp = `${data.list[i].main.temp}`
+        const Hum = `${data.list[i].main.humidity}`
+        const Press = `${data.list[i].main.pressure}`
+        const Wind = `${data.list[i].wind.speed}`
+
+        temp.push(Temp)
+        hum.push(Hum)
+        press.push(Press)
+        wind.push(Wind)
+    }
+    for (i = 0; i < 4; i++) {
+        more[i].innerHTML = 
+            `<p>Temp: ${temp[i]}°C</p>
+             <p>Hum: ${hum[i]}%</p>
+             <p>Press: ${press[i]}Pa</p>
+             <p>Wind: ${wind[i]}mts</p>
+            `
+    }
 }
 
 function theDate() {
@@ -94,27 +139,11 @@ function theDate() {
 
 function dateBuilder(d) {
     let months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
+      "January", "February", "March", "April", "May", "June", "July",
+      "August", "September", "October", "November", "December",
     ];
     let days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
+      "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
     ];
   
     let day = days[d.getDay()];

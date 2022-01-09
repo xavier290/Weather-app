@@ -6,18 +6,28 @@
     box-sizing: border-box;
 }
 
+h1, h2, p {
+    font-weight: bold;
+}
+
 .container {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    font-family: 'Comfortaa', cursive;
+    background-color: #3c3c3c;
+}
+
+.home {
     display: grid;
     grid-template-rows: 12vh 64vh 24vh;
     overflow: hidden;
-    font-family: 'Comfortaa', cursive;
-    padding: 2%;
+    width: 100%;
+    height: 100vh;
     background-image: url("../images/background.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    padding: 2%;
 }
 
 .not-available {
@@ -103,7 +113,9 @@ header .date {
     grid-template-columns: 33.33% 33.33% 33.33%;
     align-items: center;
     justify-items: center;
-    background: #ffffff93;
+    background: #000000;
+    color: #fff;
+    border-radius: 4%;
     padding: 12px 0% 12px 0%;
 }
 
@@ -122,4 +134,63 @@ header .date {
 .wind div p, 
 .pressure div p {
     margin-right: 2px;
+}
+
+.more {
+    width: 100%;
+    min-height: 100vh;
+    padding: 6% 2% 2% 2%;
+}
+
+.more h1, 
+.more h2, 
+.more h3, 
+.more p {
+    color: #fff;
+    font-weight: 400;
+}
+
+.more .box {
+    width: 100%;
+    height: 90vh;
+    margin-top: 10px;
+    border: solid 1px #000000;
+    box-shadow: 6px -1px  0px 0px #000000;
+}
+
+.more .box section {
+    width: 100%;
+    height: 25%;
+    border-bottom: solid 2px #000000;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    align-content: space-around;
+}
+
+.more .box section .content {
+    padding: 2% 0% 2% 4%;
+}
+
+.city-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20% 0% 0% 10%;
+}
+
+.city-icon img {
+    width: 50px;
+    border-radius: 100%;
+    border: solid 1px white;
+    background-color: #fff;
+}
+
+.more h2 {
+    font-size: 20px;
+    margin-bottom: 6px;
+}
+
+.more .info {
+    display: grid;
+    grid-template-columns: 50% 50%;
 }
