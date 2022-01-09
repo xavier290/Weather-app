@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=Nunito&display=swap');
+
+* {
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 12vh 64vh 24vh;
+    overflow: hidden;
+    font-family: 'Comfortaa', cursive;
+    padding: 2%;
+}
+
+.not-available {
+    position: fixed;
+}
+
+header {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+header input {
+    width: 50%;
+    height: 50%;
+    padding: 1%;
+    border-radius: 5%;
+    background: #fff;
+}
+
+.main-details {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: 30% 70%;
+}
+
+.location {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.location h1 {
+    font-size: 38px;
+}
+
+.weather-condition {
+    position: relative;
+}
+
+.weather-condition .text {
+    display: block;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    width: 200%;
+    height: 100%;
+    transform: rotateZ(270deg);
+    font-size: 18px;
+    text-align: right;
+}
+
+.temp {
+    display: flex;
+    flex-direction: row;
+}
+
+.temp .number {
+    font-size: 62px;
+}
+
+.temp .symbol {
+    font-size: 42px;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 10%;
+}
+
+.details .box {
+    display: grid;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    align-items: center;
+    justify-items: center;
+    border: solid 2px #dddddd;
+    border-radius: 5%;
+    padding: 2% 0% 2% 0%;
+}
+
+.box p {
+    margin-bottom: 4px;
+}
+
+.humidity div, 
+.wind div, 
+.pressure div {
+    display: flex;
+    flex-direction: row;
+}
+
+.humidity div p, 
+.wind div p, 
+.pressure div p {
+    margin-right: 2px;
+}
