@@ -14,6 +14,10 @@
     overflow: hidden;
     font-family: 'Comfortaa', cursive;
     padding: 2%;
+    background-image: url("../images/background.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .not-available {
@@ -24,17 +28,21 @@ header {
     position: relative;
     width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
 
 header input {
-    width: 50%;
+    width: 65%;
     height: 50%;
     padding: 1%;
     border-radius: 5%;
     background: #fff;
+    margin-right: 5%;
+}
+
+header .date {
+    text-align: center;
+    font-size: 15px;
 }
 
 .main-details {
@@ -57,16 +65,17 @@ header input {
     position: relative;
 }
 
-.weather-condition .text {
-    display: block;
-    position: absolute;
-    top: 15%;
-    left: 50%;
-    width: 200%;
+.text {
+    width: 100%;
     height: 100%;
-    transform: rotateZ(270deg);
-    font-size: 18px;
-    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.text p {
+    writing-mode: vertical-lr;
 }
 
 .temp {
@@ -75,11 +84,11 @@ header input {
 }
 
 .temp .number {
-    font-size: 62px;
+    font-size: 72px;
 }
 
 .temp .symbol {
-    font-size: 42px;
+    font-size: 48px;
 }
 
 .details {
@@ -94,9 +103,8 @@ header input {
     grid-template-columns: 33.33% 33.33% 33.33%;
     align-items: center;
     justify-items: center;
-    border: solid 2px #dddddd;
-    border-radius: 5%;
-    padding: 2% 0% 2% 0%;
+    background: #ffffff93;
+    padding: 12px 0% 12px 0%;
 }
 
 .box p {

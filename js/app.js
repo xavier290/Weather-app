@@ -12,13 +12,12 @@ window.addEventListener("load", () => {
       navigator.geolocation.getCurrentPosition(
           (position) => {
               geo_success(position)
-          },
-          () => {
+          }, () => {
               handleLocationError(true)
           }
       )
-    } 
-    else  {
+    }
+    else {
         handleLocationError(false)
     }
 });
@@ -26,6 +25,9 @@ window.addEventListener("load", () => {
 function handleLocationError(browserHasGeolocation) {
     if(browserHasGeolocation) {
         alert("Error: The Geolocation service failed.")
+    }
+    else {
+        alert("Error: Your browser doesn't support geolocation.")
     }
 }
 
@@ -37,13 +39,15 @@ async function geo_success(position) {
         let res = await fetch(`${api.base}find?lat=${lat}&lon=${lng}&units=${api.units.celcius}&appid=${api.key}`)
         let data =  await res.json()
         console.log(data)
-        renderData(data)
+        renderWeatherData(data)
     } catch (error) {
         console.log(error)
     }
 }
 
-async function renderData(data) {
+async function renderWeatherData(data) {
+    theDate()
+
     const location = document.querySelector(".location")
     location.innerHTML = `<div class="country"><h1>${data.list[0].sys.country}</h1></div>
                           <div class="city"><h2>${data.list[0].name}</h2></div>`
@@ -79,6 +83,44 @@ async function renderData(data) {
                 </div>
                 <h3 class="title">Pressure</h3>
             </div>
-        </div>
-        `
+        </div>`
+}
+
+function theDate() {
+    let now = new Date();
+    let date = document.querySelector(".date");
+    date.innerHTML = dateBuilder(now);
+}
+
+function dateBuilder(d) {
+    let months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    let days = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+  
+    let day = days[d.getDay()];
+    let date = d.getDate() + ",";
+    let month = months[d.getMonth()];
+    let year = d.getFullYear();
+  
+    return `${day} ${date} ${month} ${year}`;
 }
