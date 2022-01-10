@@ -1,4 +1,6 @@
 const searchbox = document.querySelector(".search-box")
+const layer = document.querySelector(".not-available")
+const citiesNear = document.querySelector(".more")
 
 const api = {
     key: "6dc03e881dc8b962bc1a29daeb884c5b",
@@ -10,27 +12,30 @@ const api = {
 }
 
 window.addEventListener("load", () => {
+    theDate()
+
     if (navigator.geolocation)  {
       navigator.geolocation.getCurrentPosition(
           (position) => {
               geo_success(position)
           }, () => {
-              handleLocationError(true) // in case there were any errors while trying to get location
+              handleLocationError(true, false) // in case there were any errors while trying to get location
           }
       )
-    }
-    else {
-        handleLocationError(false) // for when browser doesn't support geolocation
+    } else {
+        handleLocationError(false, false) // for when browser doesn't support geolocation
     }
 })
 
-function handleLocationError(browserHasGeolocation) {
-    if(browserHasGeolocation) {
-        alert("Error: The Geolocation service failed.")
+function handleLocationError(browserHasGeolocation, showCitiesNearU) {
+    if(!showCitiesNearU) {
+        layer.style.display = "flex"
+        citiesNear.style.display = "none"
     }
-    else {
-        alert("Error: Your browser doesn't support geolocation.") 
-    }
+
+    let infoWindow = browserHasGeolocation ? "Error: The Geolocation service failed." 
+                                           : "Error: Your browser doesn't support geolocation."
+    alert(infoWindow)
 }
 
 async function geo_success(position) {
@@ -48,8 +53,6 @@ async function geo_success(position) {
 }
 
 function renderMainWeatherData(data) {
-    theDate()
-
     const location = document.querySelector(".location")
     location.innerHTML = `<div class="country"><h1>${data.list[0].sys.country}</h1></div>
                           <div class="city"><h2>${data.list[0].name}</h2></div>`
@@ -124,18 +127,17 @@ function renderOtherData(data) {
         wind.push(Wind)
     }
     for (i = 0; i < 4; i++) {
-        more[i].innerHTML = 
-            `<p>Temp: ${temp[i]}°C</p>
-             <p>Hum: ${hum[i]}%</p>
-             <p>Press: ${press[i]}Pa</p>
-             <p>Wind: ${wind[i]}mts</p>
-            `
+        more[i].innerHTML = `<p>Temp: ${temp[i]}°C</p>
+                             <p>Hum: ${hum[i]}%</p>
+                             <p>Press: ${press[i]}Pa</p>
+                             <p>Wind: ${wind[i]}mts</p>`
     }
 }
 
 searchbox.addEventListener("keypress", (evt) => {
     if (evt.keyCode == 13) {
-        getResults(searchbox.value);
+        getResults(searchbox.value)
+        layer.style.display = "none"
     }
 })
 
@@ -144,31 +146,42 @@ async function getResults(value) {
         let res = await fetch(`${api.base}find?q=${value}&units=${api.units.celcius}&appid=${api.key}`)
         let data = await res.json()
         console.log(data)
-        renderMainWeatherData(data)
+        
+        if(data.count == "0" || data.cod == "400" || data.message == "bad query") {
+            cityNotFound(false)
+        } else {
+            renderMainWeatherData(data)
+        }
     } catch(error) {
         console.log(error)
     }
 }
 
+function cityNotFound(cityFound) {
+    if(!cityFound) {
+        alert("Error: city not found! try looking for something else")
+    }
+}
+
 function theDate() {
-    let now = new Date();
-    let date = document.querySelector(".date");
-    date.innerHTML = dateBuilder(now);
+    let now = new Date()
+    let date = document.querySelector(".date")
+    date.innerHTML = dateBuilder(now)
 }
 
 function dateBuilder(d) {
     let months = [
       "January", "February", "March", "April", "May", "June", "July",
       "August", "September", "October", "November", "December",
-    ];
+    ]
     let days = [
       "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
-    ];
+    ]
   
-    let day = days[d.getDay()];
-    let date = d.getDate() + ",";
-    let month = months[d.getMonth()];
-    let year = d.getFullYear();
+    let day = days[d.getDay()]
+    let date = d.getDate() + ","
+    let month = months[d.getMonth()]
+    let year = d.getFullYear()
   
-    return `${day} ${date} ${month} ${year}`;
+    return `${day} ${date} ${month} ${year}`
 }
