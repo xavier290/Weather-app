@@ -46,7 +46,9 @@ async function geo_success(position) {
         let res = await fetch(`${api.base}find?lat=${lat}&lon=${lng}&units=${api.units.celcius}&appid=${api.key}`)
         let data =  await res.json()
         renderMainWeatherData(data)
-        renderOtherWeatherData(data)
+
+        if(data.count > 0) renderOtherWeatherData(data)
+        else citiesNear.style.display = "none"
     } catch (error) {
         console.log(error)
     }
@@ -90,19 +92,39 @@ function renderMainWeatherData(data) {
 }
 
 function renderOtherWeatherData(data) {
-  renderTitles(data)
-  renderOtherData(data)
+    buildCards(data, 5)
+    renderTitles(data)
+    renderOtherData(data)
+}
+
+function buildCards(data, maxCards) {
+    const card = document.querySelector(".more .box")
+    let elements = document.getElementsByClassName("info-card")
+    
+    if (data.count <= maxCards && elements.length <= 3) {
+        for(let i = 0; i < data.count - 1; i++) {
+            card.innerHTML += `<section class="info-card">
+                                <div class="city-icon">
+                                    <img src="./images/city-icon.png" alt="" srcset="">
+                                </div>
+                                <div class="content">
+                                    <div class="title"></div>
+                                    <div class="info"></div>
+                                </div>
+                            </section>`
+        }
+    }
 }
 
 function renderTitles(data) {
     const more = document.querySelectorAll(".content .title")
     let titles = []
     //getting cities names from the json and placing it into an object to pass it into the html
-    for (i = 1; i < 5; i++) {
+    for (i = 1; i < data.count; i++) {
         const name = `${data.list[i].name}`
         titles.push(name)
     }
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < data.count - 1; i++) {
         more[i].innerHTML = `<h2>${titles[i]}</h2>`
     }
 }
@@ -115,7 +137,7 @@ function renderOtherData(data) {
     let wind = []
 
     // getting temperature, pressure, wind and humitity and displaying them
-    for (i = 1; i < 5; i++) {
+    for (i = 1; i < data.count; i++) {
         const Temp = `${data.list[i].main.temp}`
         const Hum = `${data.list[i].main.humidity}`
         const Press = `${data.list[i].main.pressure}`
@@ -126,7 +148,7 @@ function renderOtherData(data) {
         press.push(Press)
         wind.push(Wind)
     }
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < data.count - 1; i++) {
         more[i].innerHTML = `<p>Temp: ${temp[i]}°C</p>
                              <p>Hum: ${hum[i]}%</p>
                              <p>Press: ${press[i]}Pa</p>
@@ -151,6 +173,7 @@ async function getResults(value) {
             cityNotFound(false)
         } else {
             renderMainWeatherData(data)
+            renderOtherWeatherData(data)
         }
     } catch(error) {
         console.log(error)
