@@ -1,3 +1,5 @@
+const searchbox = document.querySelector(".search-box")
+
 const api = {
     key: "6dc03e881dc8b962bc1a29daeb884c5b",
     base: "https://api.openweathermap.org/data/2.5/",
@@ -5,7 +7,7 @@ const api = {
         celcius: "metric",
         farenheit: "imperial"
     }
-};
+}
 
 window.addEventListener("load", () => {
     if (navigator.geolocation)  {
@@ -13,21 +15,21 @@ window.addEventListener("load", () => {
           (position) => {
               geo_success(position)
           }, () => {
-              handleLocationError(true)
+              handleLocationError(true) // in case there were any errors while trying to get location
           }
       )
     }
     else {
-        handleLocationError(false)
+        handleLocationError(false) // for when browser doesn't support geolocation
     }
-});
+})
 
 function handleLocationError(browserHasGeolocation) {
     if(browserHasGeolocation) {
         alert("Error: The Geolocation service failed.")
     }
     else {
-        alert("Error: Your browser doesn't support geolocation.")
+        alert("Error: Your browser doesn't support geolocation.") 
     }
 }
 
@@ -128,6 +130,23 @@ function renderOtherData(data) {
              <p>Press: ${press[i]}Pa</p>
              <p>Wind: ${wind[i]}mts</p>
             `
+    }
+}
+
+searchbox.addEventListener("keypress", (evt) => {
+    if (evt.keyCode == 13) {
+        getResults(searchbox.value);
+    }
+})
+
+async function getResults(value) {
+    try {
+        let res = await fetch(`${api.base}find?q=${value}&units=${api.units.celcius}&appid=${api.key}`)
+        let data = await res.json()
+        console.log(data)
+        renderMainWeatherData(data)
+    } catch(error) {
+        console.log(error)
     }
 }
 

@@ -155,7 +155,7 @@ header .date {
     height: 90vh;
     margin-top: 10px;
     border: solid 1px #000000;
-    box-shadow: 6px -1px  0px 0px #000000;
+    box-shadow: 6px 6px  0px 0px #000000;
 }
 
 .more .box section {
