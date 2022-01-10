@@ -2,6 +2,8 @@ const searchbox = document.querySelector(".search-box")
 const layer = document.querySelector(".not-available")
 const citiesNear = document.querySelector(".more")
 
+let elements = document.getElementsByClassName("info-card")
+
 const api = {
     key: "6dc03e881dc8b962bc1a29daeb884c5b",
     base: "https://api.openweathermap.org/data/2.5/",
@@ -92,27 +94,24 @@ function renderMainWeatherData(data) {
 }
 
 function renderOtherWeatherData(data) {
-    buildCards(data, 5)
+    buildCards(data)
     renderTitles(data)
     renderOtherData(data)
 }
 
-function buildCards(data, maxCards) {
+function buildCards(data) {
     const card = document.querySelector(".more .box")
-    let elements = document.getElementsByClassName("info-card")
     
-    if (data.count <= maxCards && elements.length <= 3) {
-        for(let i = 0; i < data.count - 1; i++) {
-            card.innerHTML += `<section class="info-card">
-                                <div class="city-icon">
-                                    <img src="./images/city-icon.png" alt="" srcset="">
-                                </div>
-                                <div class="content">
-                                    <div class="title"></div>
-                                    <div class="info"></div>
-                                </div>
-                            </section>`
-        }
+    while (elements.length < data.count - 1 && elements.length < 5) {
+        card.innerHTML += `<section class="info-card">
+                            <div class="city-icon">
+                                <img src="./images/city-icon.png" alt="" srcset="">
+                            </div>
+                            <div class="content">
+                                <div class="title"></div>
+                                <div class="info"></div>
+                            </div>
+                        </section>`
     }
 }
 
@@ -135,7 +134,6 @@ function renderOtherData(data) {
     let hum = []
     let press = []
     let wind = []
-
     // getting temperature, pressure, wind and humitity and displaying them
     for (i = 1; i < data.count; i++) {
         const Temp = `${data.list[i].main.temp}`
@@ -167,13 +165,13 @@ async function getResults(value) {
     try {
         let res = await fetch(`${api.base}find?q=${value}&units=${api.units.celcius}&appid=${api.key}`)
         let data = await res.json()
-        console.log(data)
         
         if(data.count == "0" || data.cod == "400" || data.message == "bad query") {
             cityNotFound(false)
         } else {
             renderMainWeatherData(data)
             renderOtherWeatherData(data)
+            citiesNear.style.display = "flex"
         }
     } catch(error) {
         console.log(error)
