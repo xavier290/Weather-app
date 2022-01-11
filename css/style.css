@@ -14,19 +14,39 @@ h1, h2, p {
     width: 100%;
     min-height: 100vh;
     font-family: 'Comfortaa', cursive;
-    background-color: #000;
+}
+
+header {
+    width: 100%;
+    height: 12vh;
+    padding: 2%;
+    display: flex;
+    align-items: center;
+    z-index: 5;
+}
+
+header input {
+    width: 65%;
+    height: 50%;
+    padding: 1%;
+    background: #fff;
+    margin-right: 5%;
+}
+
+header .logo {
+    display: none;
+}
+
+header .date {
+    text-align: center;
+    font-size: 15px;
 }
 
 .home {
     display: grid;
-    grid-template-rows: 12vh 64vh 24vh;
-    overflow: hidden;
+    grid-template-rows: 60% 40%;    
     width: 100%;
-    height: 100vh;
-    background-image: url("../images/background.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    height: 88vh;
     padding: 2%;
 }
 
@@ -53,27 +73,6 @@ h1, h2, p {
     margin-bottom: 6px;
 }
 
-header {
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    z-index: 5;
-}
-
-header input {
-    width: 65%;
-    height: 50%;
-    padding: 1%;
-    background: #fff;
-    margin-right: 5%;
-}
-
-header .date {
-    text-align: center;
-    font-size: 15px;
-}
-
 .main-details {
     display: grid;
     grid-template-columns: 80% 20%;
@@ -88,10 +87,6 @@ header .date {
 
 .location h1 {
     font-size: 38px;
-}
-
-.weather-condition {
-    position: relative;
 }
 
 .text {
@@ -132,9 +127,8 @@ header .date {
     grid-template-columns: 33.33% 33.33% 33.33%;
     align-items: center;
     justify-items: center;
-    background: #00000077;
+    background: #000000;
     color: #fff;
-    border-radius: 4%;
     padding: 12px 0% 12px 0%;
 }
 
@@ -156,6 +150,8 @@ header .date {
 }
 
 .more {
+    display: flex;
+    justify-content: center;
     flex-direction: column;
     width: 100%;
     height: fit-content;
@@ -166,11 +162,13 @@ header .date {
 .more h2, 
 .more h3, 
 .more p {
-    color: #fff;
     font-weight: 400;
 }
 
 .more .box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
     height: fit-content;
     margin-top: 10px;
@@ -201,8 +199,7 @@ header .date {
 .city-icon img {
     width: 50px;
     border-radius: 100%;
-    border: solid 1px white;
-    background-color: #fff;
+    box-shadow: 0px 0px 0px 1px #000000;
 }
 
 .more h2 {
@@ -218,29 +215,89 @@ header .date {
 @media all and (min-width: 710px) {
     .container {
         display: grid;
-        grid-template-columns: 50% 50%;
+        grid-template-rows: 12vh 88vh;
+        grid-template-columns: 60% 40%;
+        grid-template-areas: "a a" "b c";
+        height: 100vh;
+        overflow: hidden;
     }
-    .not-available {
-        width: 50%;
-        background-color: #333333;
-        color: #fff;
+    header {
+        display: grid;
+        grid-template-columns: 60% 20% 20%;
+        grid-template-areas: "a b c";
+    }
+    header .logo {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    header .logo img {
+        width: max-content;
+        height: 40px;
+    }
+    header .search-box {
+        width: 100%;
+        height: 26px;
+        grid-area: b;
+    }
+    header .date {
+        grid-area: c;
+        font-size: 14px;
+    }
+    .menu {
+        grid-area: a;
+        border-bottom: 1px solid #000;
     }
     .home {
-        background-image: url("../images/bg2.jpg");
-        color: #fff;
+        border-right: 1px solid #000;
     }
-    .more {
-        background-color: #000000;
-        height: 100vh;
+    .main-details{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
-    .info-card {
-        box-shadow: 1px 1px 1px 0px #fff;
-        background-color: #06062762;
+    .weather-condition .text {
+        display: block;
+    }
+    .weather-condition .text p {
+        writing-mode: horizontal-tb;
+    }
+    .main-details div {
+        margin-bottom: 6px;
+    }
+    .details {
+        padding-bottom: 0%;
+    }
+    .more .box {
+        box-shadow: none;
+        border: none;
+    }
+    .more .box section {
+        height: 20vh;
+        border-bottom: none;
     }
 }
 
 @media all and (min-width: 940px) {
+    .container {
+        grid-template-columns: 65% 35%;
+    }
+    header {
+        grid-template-columns: 65% 20% 15%;
+    }
     .home {
-        background-image: url("../images/bg3.jpg");
+        background-position: bottom;
+    }
+    .more .box {
+        margin-top: 0px;
+    }
+}
+
+@media all and  (min-width: 1240px) {
+    .container {
+        grid-template-columns: 70% 30%;
+    }
+    header {
+        grid-template-columns: 71% 14.5% 14.5%;
     }
 }
