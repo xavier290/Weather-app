@@ -16,6 +16,10 @@ h1, h2, p {
     font-family: 'Comfortaa', cursive;
 }
 
+.cover-all {
+    display: none;
+}
+
 header {
     width: 100%;
     height: 12vh;
@@ -27,7 +31,7 @@ header {
 
 header input {
     width: 65%;
-    height: 50%;
+    height: 26px;
     padding: 1%;
     background: #fff;
     margin-right: 5%;
@@ -130,6 +134,7 @@ header .date {
     background: #000000;
     color: #fff;
     padding: 12px 0% 12px 0%;
+    height: fit-content;
 }
 
 .box p {
@@ -299,5 +304,106 @@ header .date {
     }
     header {
         grid-template-columns: 71% 14.5% 14.5%;
+    }
+}
+
+@media all and (min-width: 1440px) {
+    .logo img {
+        height: 55px !important;
+    }
+    .logo p {
+        font-size: 18px !important;
+    }
+    .date {
+        font-size: 16px !important;
+    }
+    .search-box {
+        height: 30px !important;
+        font-size: 16px;
+    }
+    .location h1 {
+        font-size: 52px;
+    }
+    .city h2 {
+        font-size: 42px;
+    }
+    .weather-condition p {
+        font-size: 32px;
+    }
+    .temp .number {
+        font-size: 82px;
+    }
+    .details .box div p, 
+    .symbol, 
+    .details .box .title {
+        font-size: 22px !important;
+        margin: none;
+    }
+    .more h1 {
+        font-size: 32px;
+    }
+    .info-card h2 {
+        font-size: 28px;
+    }
+    .info-card p {
+        font-size: 22px;
+    }
+}
+
+@media only screen and (max-width: 850px) and (orientation: landscape) and (max-height: 425px) {
+    .cover-all {
+        position: fixed;
+        width: 100%;
+        height: 110vh;
+        z-index: 12;
+        background: #d3d3d3;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+    }
+    .screen:after {
+        display: block;
+        position: absolute;
+        content: "";
+    }
+    .phone {
+        position: relative;
+        border: solid #ffffff;
+        border-width: 7.75vmin 1.24vmin;
+        border-radius: 4.1333333333vmin;
+        animation: phone 3.5s infinite 0.6s;
+        transform: rotateZ(-90deg);
+    }
+    .dtls {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    .screen {
+        position: relative;
+        width: 26vmin;
+        height: 40vmin;
+        border-radius: 10px;
+    }
+    .cover-all p {
+        margin-top: 10px;
+        font-size: 18px;
+    }
+}
+
+@keyframes phone {
+    0% {
+      transform: rotateZ(-90deg);
+    }
+    20% {
+      transform: rotateZ(-90deg);
+    }
+    80% {
+      transform: rotateZ(0deg);
+    }
+    100% {
+      transform: rotateZ(0deg);
     }
 }
